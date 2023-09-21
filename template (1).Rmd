@@ -28,5 +28,5 @@ litters_df_abs =
 litters_df =
   janitor::clean_names(litters_df)
 
-litters_df 
+litters_df = 
 ```

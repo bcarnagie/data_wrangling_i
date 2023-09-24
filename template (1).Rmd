@@ -26,7 +26,9 @@ litters_df_abs =
   read.csv("data/FAS_litters.csv")
 
 litters_df =
-  janitor::clean_names(litters_df)
+  janitor::clean_names(litters_df_abs)
 
-litters_df = 
+litters_df_abs = 
+ read.csv("~/Programming/P8105/data_wrangling_i/data/FAS_litters.csv")
 ```
+Avoiding absolute paths are important because if you move the location,it is no longer reproducible. This is why it is better to keep an R project where everything is together.

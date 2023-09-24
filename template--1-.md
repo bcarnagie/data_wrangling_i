@@ -18,133 +18,82 @@ library(tidyverse)
 
 ``` r
 library(readr)
+library(readxl)
+library(haven)
+library(shiny)
 ```
 
 Let’s import the `FAS_litters.csv` csv using a relative path.
 
 ``` r
 litters_df = 
-  read.csv("data/FAS_litters.csv")
+  read_csv("data/FAS_litters.csv")
+```
 
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
 litters_df =
   janitor::clean_names(litters_df)
 
 litters_df 
 ```
 
-    ##    group   litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
-    ## 1   Con7             #85       19.7        34.7          20               3
-    ## 2   Con7       #1/2/95/2       27.0        42.0          19               8
-    ## 3   Con7   #5/5/3/83/3-3       26.0        41.4          19               6
-    ## 4   Con7     #5/4/2/95/2       28.5        44.1          19               5
-    ## 5   Con7     #4/2/95/3-3         NA          NA          20               6
-    ## 6   Con7     #2/2/95/3-2         NA          NA          20               6
-    ## 7   Con7 #1/5/3/83/3-3/2         NA          NA          20               9
-    ## 8   Con8       #3/83/3-3         NA          NA          20               9
-    ## 9   Con8         #2/95/3         NA          NA          20               8
-    ## 10  Con8     #3/5/2/2/95       28.5          NA          20               8
-    ## 11  Con8     #5/4/3/83/3       28.0          NA          19               9
-    ## 12  Con8   #1/6/2/2/95-2         NA          NA          20               7
-    ## 13  Con8 #3/5/3/83/3-3-2         NA          NA          20               8
-    ## 14  Con8       #2/2/95/2         NA          NA          19               5
-    ## 15  Con8   #3/6/2/2/95-3         NA          NA          20               7
-    ## 16  Mod7             #59       17.0        33.4          19               8
-    ## 17  Mod7            #103       21.4        42.1          19               9
-    ## 18  Mod7       #1/82/3-2         NA          NA          19               6
-    ## 19  Mod7       #3/83/3-2         NA          NA          19               8
-    ## 20  Mod7       #2/95/2-2         NA          NA          20               7
-    ## 21  Mod7       #3/82/3-2       28.0        45.9          20               5
-    ## 22  Mod7       #4/2/95/2       23.5          NA          19               9
-    ## 23  Mod7     #5/3/83/5-2       22.6        37.0          19               5
-    ## 24  Mod7      #8/110/3-2         NA          NA          20               9
-    ## 25  Mod7            #106       21.7        37.8          20               5
-    ## 26  Mod7           #94/2       24.4        42.9          19               7
-    ## 27  Mod7             #62       19.5        35.9          19               7
-    ## 28  Low7           #84/2       24.3        40.8          20               8
-    ## 29  Low7            #107       22.6        42.4          20               9
-    ## 30  Low7           #85/2       22.2        38.5          20               8
-    ## 31  Low7             #98       23.8        43.8          20               9
-    ## 32  Low7            #102       22.6        43.3          20              11
-    ## 33  Low7            #101       23.8        42.7          20               9
-    ## 34  Low7            #111       25.5        44.6          20               3
-    ## 35  Low7            #112       23.9        40.5          19               6
-    ## 36  Mod8             #97       24.5        42.8          20               8
-    ## 37  Mod8           #5/93         NA        41.1          20              11
-    ## 38  Mod8         #5/93/2         NA          NA          19               8
-    ## 39  Mod8       #7/82-3-2       26.9        43.2          20               7
-    ## 40  Mod8      #7/110/3-2       27.5        46.0          19               8
-    ## 41  Mod8         #2/95/2       28.5        44.5          20               9
-    ## 42  Mod8           #82/4       33.4        52.7          20               8
-    ## 43  Low8             #53       21.8        37.2          20               8
-    ## 44  Low8             #79       25.4        43.8          19               8
-    ## 45  Low8            #100       20.0        39.2          20               8
-    ## 46  Low8           #4/84       21.8        35.2          20               4
-    ## 47  Low8            #108       25.6        47.5          20               8
-    ## 48  Low8             #99       23.5        39.0          20               6
-    ## 49  Low8            #110       25.5        42.7          20               7
-    ##    pups_dead_birth pups_survive
-    ## 1                4            3
-    ## 2                0            7
-    ## 3                0            5
-    ## 4                1            4
-    ## 5                0            6
-    ## 6                0            4
-    ## 7                0            9
-    ## 8                1            8
-    ## 9                0            8
-    ## 10               0            8
-    ## 11               0            8
-    ## 12               0            6
-    ## 13               0            8
-    ## 14               0            4
-    ## 15               0            7
-    ## 16               0            5
-    ## 17               1            9
-    ## 18               0            6
-    ## 19               0            8
-    ## 20               0            7
-    ## 21               0            5
-    ## 22               0            7
-    ## 23               0            5
-    ## 24               0            9
-    ## 25               0            2
-    ## 26               1            3
-    ## 27               2            4
-    ## 28               0            8
-    ## 29               0            8
-    ## 30               0            6
-    ## 31               0            9
-    ## 32               0            7
-    ## 33               0            9
-    ## 34               2            3
-    ## 35               1            1
-    ## 36               1            8
-    ## 37               0            9
-    ## 38               0            8
-    ## 39               0            7
-    ## 40               1            8
-    ## 41               0            9
-    ## 42               0            6
-    ## 43               1            7
-    ## 44               0            7
-    ## 45               0            7
-    ## 46               0            4
-    ## 47               0            7
-    ## 48               0            5
-    ## 49               0            6
+    ## # A tibble: 49 × 8
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                   19.7        34.7          20               3
+    ##  2 Con7  #1/2/95/2             27          42            19               8
+    ##  3 Con7  #5/5/3/83/3-3         26          41.4          19               6
+    ##  4 Con7  #5/4/2/95/2           28.5        44.1          19               5
+    ##  5 Con7  #4/2/95/3-3           NA          NA            20               6
+    ##  6 Con7  #2/2/95/3-2           NA          NA            20               6
+    ##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20               9
+    ##  8 Con8  #3/83/3-3             NA          NA            20               9
+    ##  9 Con8  #2/95/3               NA          NA            20               8
+    ## 10 Con8  #3/5/2/2/95           28.5        NA            20               8
+    ## # ℹ 39 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
 
 Import the same dataset using an absolute path.
 
 ``` r
 litters_df_abs = 
-  read.csv("data/FAS_litters.csv")
+  read_csv("data/FAS_litters.csv")
+```
 
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
 litters_df =
   janitor::clean_names(litters_df_abs)
 
 litters_df_abs = 
- read.csv("~/Programming/P8105/data_wrangling_i/data/FAS_litters.csv")
+ read_csv("~/Programming/P8105/data_wrangling_i/data/FAS_litters.csv")
 ```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 Avoiding absolute paths are important because if you move the location,
 it is no longer reproducible. This is why it is better to keep an R
@@ -154,14 +103,36 @@ Learning Assessment: Import pups dataset
 
 ``` r
 pups_df = 
-  read.csv("data/FAS_pups.csv")
+  read_csv("data/FAS_pups.csv")
+```
 
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Litter Number
+    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
 pups_df =
   janitor::clean_names(pups_df)
 
 pups_df_abs = 
-  read.csv("~/Programming/P8105/data_wrangling_i/data/FAS_pups.csv")
+  read_csv("~/Programming/P8105/data_wrangling_i/data/FAS_pups.csv")
+```
 
+    ## Rows: 313 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): Litter Number
+    ## dbl (5): Sex, PD ears, PD eyes, PD pivot, PD walk
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
 pups_df_abs =
   janitor::clean_names(pups_df_abs)
 ```
@@ -172,144 +143,51 @@ pups_df_abs =
 litters_df
 ```
 
-    ##    group   litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
-    ## 1   Con7             #85       19.7        34.7          20               3
-    ## 2   Con7       #1/2/95/2       27.0        42.0          19               8
-    ## 3   Con7   #5/5/3/83/3-3       26.0        41.4          19               6
-    ## 4   Con7     #5/4/2/95/2       28.5        44.1          19               5
-    ## 5   Con7     #4/2/95/3-3         NA          NA          20               6
-    ## 6   Con7     #2/2/95/3-2         NA          NA          20               6
-    ## 7   Con7 #1/5/3/83/3-3/2         NA          NA          20               9
-    ## 8   Con8       #3/83/3-3         NA          NA          20               9
-    ## 9   Con8         #2/95/3         NA          NA          20               8
-    ## 10  Con8     #3/5/2/2/95       28.5          NA          20               8
-    ## 11  Con8     #5/4/3/83/3       28.0          NA          19               9
-    ## 12  Con8   #1/6/2/2/95-2         NA          NA          20               7
-    ## 13  Con8 #3/5/3/83/3-3-2         NA          NA          20               8
-    ## 14  Con8       #2/2/95/2         NA          NA          19               5
-    ## 15  Con8   #3/6/2/2/95-3         NA          NA          20               7
-    ## 16  Mod7             #59       17.0        33.4          19               8
-    ## 17  Mod7            #103       21.4        42.1          19               9
-    ## 18  Mod7       #1/82/3-2         NA          NA          19               6
-    ## 19  Mod7       #3/83/3-2         NA          NA          19               8
-    ## 20  Mod7       #2/95/2-2         NA          NA          20               7
-    ## 21  Mod7       #3/82/3-2       28.0        45.9          20               5
-    ## 22  Mod7       #4/2/95/2       23.5          NA          19               9
-    ## 23  Mod7     #5/3/83/5-2       22.6        37.0          19               5
-    ## 24  Mod7      #8/110/3-2         NA          NA          20               9
-    ## 25  Mod7            #106       21.7        37.8          20               5
-    ## 26  Mod7           #94/2       24.4        42.9          19               7
-    ## 27  Mod7             #62       19.5        35.9          19               7
-    ## 28  Low7           #84/2       24.3        40.8          20               8
-    ## 29  Low7            #107       22.6        42.4          20               9
-    ## 30  Low7           #85/2       22.2        38.5          20               8
-    ## 31  Low7             #98       23.8        43.8          20               9
-    ## 32  Low7            #102       22.6        43.3          20              11
-    ## 33  Low7            #101       23.8        42.7          20               9
-    ## 34  Low7            #111       25.5        44.6          20               3
-    ## 35  Low7            #112       23.9        40.5          19               6
-    ## 36  Mod8             #97       24.5        42.8          20               8
-    ## 37  Mod8           #5/93         NA        41.1          20              11
-    ## 38  Mod8         #5/93/2         NA          NA          19               8
-    ## 39  Mod8       #7/82-3-2       26.9        43.2          20               7
-    ## 40  Mod8      #7/110/3-2       27.5        46.0          19               8
-    ## 41  Mod8         #2/95/2       28.5        44.5          20               9
-    ## 42  Mod8           #82/4       33.4        52.7          20               8
-    ## 43  Low8             #53       21.8        37.2          20               8
-    ## 44  Low8             #79       25.4        43.8          19               8
-    ## 45  Low8            #100       20.0        39.2          20               8
-    ## 46  Low8           #4/84       21.8        35.2          20               4
-    ## 47  Low8            #108       25.6        47.5          20               8
-    ## 48  Low8             #99       23.5        39.0          20               6
-    ## 49  Low8            #110       25.5        42.7          20               7
-    ##    pups_dead_birth pups_survive
-    ## 1                4            3
-    ## 2                0            7
-    ## 3                0            5
-    ## 4                1            4
-    ## 5                0            6
-    ## 6                0            4
-    ## 7                0            9
-    ## 8                1            8
-    ## 9                0            8
-    ## 10               0            8
-    ## 11               0            8
-    ## 12               0            6
-    ## 13               0            8
-    ## 14               0            4
-    ## 15               0            7
-    ## 16               0            5
-    ## 17               1            9
-    ## 18               0            6
-    ## 19               0            8
-    ## 20               0            7
-    ## 21               0            5
-    ## 22               0            7
-    ## 23               0            5
-    ## 24               0            9
-    ## 25               0            2
-    ## 26               1            3
-    ## 27               2            4
-    ## 28               0            8
-    ## 29               0            8
-    ## 30               0            6
-    ## 31               0            9
-    ## 32               0            7
-    ## 33               0            9
-    ## 34               2            3
-    ## 35               1            1
-    ## 36               1            8
-    ## 37               0            9
-    ## 38               0            8
-    ## 39               0            7
-    ## 40               1            8
-    ## 41               0            9
-    ## 42               0            6
-    ## 43               1            7
-    ## 44               0            7
-    ## 45               0            7
-    ## 46               0            4
-    ## 47               0            7
-    ## 48               0            5
-    ## 49               0            6
+    ## # A tibble: 49 × 8
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                   19.7        34.7          20               3
+    ##  2 Con7  #1/2/95/2             27          42            19               8
+    ##  3 Con7  #5/5/3/83/3-3         26          41.4          19               6
+    ##  4 Con7  #5/4/2/95/2           28.5        44.1          19               5
+    ##  5 Con7  #4/2/95/3-3           NA          NA            20               6
+    ##  6 Con7  #2/2/95/3-2           NA          NA            20               6
+    ##  7 Con7  #1/5/3/83/3-3/2       NA          NA            20               9
+    ##  8 Con8  #3/83/3-3             NA          NA            20               9
+    ##  9 Con8  #2/95/3               NA          NA            20               8
+    ## 10 Con8  #3/5/2/2/95           28.5        NA            20               8
+    ## # ℹ 39 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
 
 ``` r
 head(litters_df)
 ```
 
+    ## # A tibble: 6 × 8
     ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
-    ## 1  Con7           #85       19.7        34.7          20               3
-    ## 2  Con7     #1/2/95/2       27.0        42.0          19               8
-    ## 3  Con7 #5/5/3/83/3-3       26.0        41.4          19               6
-    ## 4  Con7   #5/4/2/95/2       28.5        44.1          19               5
-    ## 5  Con7   #4/2/95/3-3         NA          NA          20               6
-    ## 6  Con7   #2/2/95/3-2         NA          NA          20               6
-    ##   pups_dead_birth pups_survive
-    ## 1               4            3
-    ## 2               0            7
-    ## 3               0            5
-    ## 4               1            4
-    ## 5               0            6
-    ## 6               0            4
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Con7  #85                 19.7        34.7          20               3
+    ## 2 Con7  #1/2/95/2           27          42            19               8
+    ## 3 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ## 4 Con7  #5/4/2/95/2         28.5        44.1          19               5
+    ## 5 Con7  #4/2/95/3-3         NA          NA            20               6
+    ## 6 Con7  #2/2/95/3-2         NA          NA            20               6
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
 
 ``` r
 tail(litters_df)
 ```
 
-    ##    group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
-    ## 44  Low8           #79       25.4        43.8          19               8
-    ## 45  Low8          #100       20.0        39.2          20               8
-    ## 46  Low8         #4/84       21.8        35.2          20               4
-    ## 47  Low8          #108       25.6        47.5          20               8
-    ## 48  Low8           #99       23.5        39.0          20               6
-    ## 49  Low8          #110       25.5        42.7          20               7
-    ##    pups_dead_birth pups_survive
-    ## 44               0            7
-    ## 45               0            7
-    ## 46               0            4
-    ## 47               0            7
-    ## 48               0            5
-    ## 49               0            6
+    ## # A tibble: 6 × 8
+    ##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##   <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ## 1 Low8  #79                 25.4        43.8          19               8
+    ## 2 Low8  #100                20          39.2          20               8
+    ## 3 Low8  #4/84               21.8        35.2          20               4
+    ## 4 Low8  #108                25.6        47.5          20               8
+    ## 5 Low8  #99                 23.5        39            20               6
+    ## 6 Low8  #110                25.5        42.7          20               7
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
 
 ## You can use `view` function
 
@@ -321,15 +199,27 @@ view(litters_df)
 str(litters_df)
 ```
 
-    ## 'data.frame':    49 obs. of  8 variables:
-    ##  $ group          : chr  "Con7" "Con7" "Con7" "Con7" ...
-    ##  $ litter_number  : chr  "#85" "#1/2/95/2" "#5/5/3/83/3-3" "#5/4/2/95/2" ...
-    ##  $ gd0_weight     : num  19.7 27 26 28.5 NA NA NA NA NA 28.5 ...
-    ##  $ gd18_weight    : num  34.7 42 41.4 44.1 NA NA NA NA NA NA ...
-    ##  $ gd_of_birth    : int  20 19 19 19 20 20 20 20 20 20 ...
-    ##  $ pups_born_alive: int  3 8 6 5 6 6 9 9 8 8 ...
-    ##  $ pups_dead_birth: int  4 0 0 1 0 0 0 1 0 0 ...
-    ##  $ pups_survive   : int  3 7 5 4 6 4 9 8 8 8 ...
+    ## spc_tbl_ [49 × 8] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+    ##  $ group          : chr [1:49] "Con7" "Con7" "Con7" "Con7" ...
+    ##  $ litter_number  : chr [1:49] "#85" "#1/2/95/2" "#5/5/3/83/3-3" "#5/4/2/95/2" ...
+    ##  $ gd0_weight     : num [1:49] 19.7 27 26 28.5 NA NA NA NA NA 28.5 ...
+    ##  $ gd18_weight    : num [1:49] 34.7 42 41.4 44.1 NA NA NA NA NA NA ...
+    ##  $ gd_of_birth    : num [1:49] 20 19 19 19 20 20 20 20 20 20 ...
+    ##  $ pups_born_alive: num [1:49] 3 8 6 5 6 6 9 9 8 8 ...
+    ##  $ pups_dead_birth: num [1:49] 4 0 0 1 0 0 0 1 0 0 ...
+    ##  $ pups_survive   : num [1:49] 3 7 5 4 6 4 9 8 8 8 ...
+    ##  - attr(*, "spec")=
+    ##   .. cols(
+    ##   ..   Group = col_character(),
+    ##   ..   `Litter Number` = col_character(),
+    ##   ..   `GD0 weight` = col_double(),
+    ##   ..   `GD18 weight` = col_double(),
+    ##   ..   `GD of Birth` = col_double(),
+    ##   ..   `Pups born alive` = col_double(),
+    ##   ..   `Pups dead @ birth` = col_double(),
+    ##   ..   `Pups survive` = col_double()
+    ##   .. )
+    ##  - attr(*, "problems")=<externalptr>
 
 ``` r
 skimr::skim(litters_df)
@@ -371,10 +261,22 @@ Data summary
 
 ``` r
 litters_df = 
-  read.csv(
+  read_csv(
     "data/FAS_litters.csv",
     skip = 10)
+```
 
+    ## New names:
+    ## Rows: 39 Columns: 8
+    ## ── Column specification
+    ## ──────────────────────────────────────────────────────── Delimiter: "," chr
+    ## (2): Con8, #3/5/2/2/95 dbl (6): 28.5, NA, 20, 8...6, 0, 8...8
+    ## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+    ## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+    ## • `8` -> `8...6`
+    ## • `8` -> `8...8`
+
+``` r
 ## useful when you have a data dictioanry in the first few rows of a dataset
 ```
 
@@ -382,13 +284,26 @@ Look at NA values
 
 ``` r
 litters_df = 
-  read.csv(
+  read_csv(
     "data/FAS_litters.csv",
     na = c("NA", 19, "MISSING", "."))
+```
 
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
 # useful if you know that 999 is coded as "i dont know" for example 
 litters_df = as_tibble(litters_df)
 ```
+
+Column types
 
 ``` r
 litters_df = read_csv(
@@ -398,4 +313,50 @@ litters_df = read_csv(
     # Specify other columns and their types here if needed
   )
 )
+```
+
+## Other file types
+
+Import a xlsv file first.
+
+``` r
+mlb_df = 
+  read_excel("data/mlb11.xlsx")
+```
+
+import a sas datafile.
+
+``` r
+pulse_df = 
+  read_sas("data/public_pulse_data.sas7bdat")
+```
+
+## Base R: do not do this…
+
+``` r
+litters_df = 
+  read.csv()
+```
+
+## Export Data
+
+``` r
+litters_df_cleaned = 
+  read_csv("data/FAS_litters.csv")
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+litters_df_cleaned = 
+  janitor:: clean_names(litters_df_cleaned)
+
+write_csv(litters_df_cleaned,"data/litters_cleaned.csv")
 ```

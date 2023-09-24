@@ -16,7 +16,7 @@ library(shiny)
 Let's import the `FAS_litters.csv` csv using a relative path.
 ```{r}
 litters_df = 
-  read.csv("data/FAS_litters.csv")
+  read_csv("data/FAS_litters.csv")
 
 litters_df =
   janitor::clean_names(litters_df)
@@ -27,26 +27,26 @@ litters_df
 Import the same dataset using an absolute path.
 ```{r}
 litters_df_abs = 
-  read.csv("data/FAS_litters.csv")
+  read_csv("data/FAS_litters.csv")
 
 litters_df =
   janitor::clean_names(litters_df_abs)
 
 litters_df_abs = 
- read.csv("~/Programming/P8105/data_wrangling_i/data/FAS_litters.csv")
+ read_csv("~/Programming/P8105/data_wrangling_i/data/FAS_litters.csv")
 ```
 Avoiding absolute paths are important because if you move the location, it is no longer reproducible. This is why it is better to keep an R project where everything is together.
 
 Learning Assessment: Import pups dataset
 ```{r}
 pups_df = 
-  read.csv("data/FAS_pups.csv")
+  read_csv("data/FAS_pups.csv")
 
 pups_df =
   janitor::clean_names(pups_df)
 
 pups_df_abs = 
-  read.csv("~/Programming/P8105/data_wrangling_i/data/FAS_pups.csv")
+  read_csv("~/Programming/P8105/data_wrangling_i/data/FAS_pups.csv")
 
 pups_df_abs =
   janitor::clean_names(pups_df_abs)
@@ -59,8 +59,6 @@ litters_df
 head(litters_df)
 
 tail(litters_df)
-
-
 ```
 
 ## You can use `view` function
@@ -79,7 +77,7 @@ skimr::skim(litters_df)
 
 ```{r}
 litters_df = 
-  read.csv(
+  read_csv(
     "data/FAS_litters.csv",
     skip = 10)
 
@@ -91,7 +89,7 @@ Look at NA values
 
 ```{r}
 litters_df = 
-  read.csv(
+  read_csv(
     "data/FAS_litters.csv",
     na = c("NA", 19, "MISSING", "."))
 
@@ -126,4 +124,27 @@ import a sas datafile.
 pulse_df = 
   read_sas("data/public_pulse_data.sas7bdat")
 ```
+
+
+## Base R: do not do this...
+```{r, eval = FALSE}
+litters_df = 
+  read.csv()
+
+```
+
+
+
+## Export Data
+
+```{r}
+litters_df_cleaned = 
+  read_csv("data/FAS_litters.csv")
+
+litters_df_cleaned = 
+  janitor:: clean_names(litters_df_cleaned)
+
+write_csv(litters_df_cleaned,"data/litters_cleaned.csv")
+```
+
 

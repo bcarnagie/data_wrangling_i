@@ -7,4 +7,59 @@ output: github_document
 library(tidyverse)
 ```
 
+Load the litter dataframe
+```{r}
+litters_df = 
+  read_csv("data/FAS_litters.csv")
+
+litters_df = janitor::clean_names(litters_df)
+
+litters_df
+```
+
+Load the pups dataframe
+```{r}
+pups_df = 
+  read_csv("data/FAS_pups.csv")
+
+pups_df = janitor::clean_names(pups_df)
+
+pups_df
+```
+
+## `select`
+
+`select` is used to select columns!
+
+```{r}
+# order matters, and the colon allows you to select from one variable to another
+select(litters_df, group, litter_number, gd0_weight)
+
+select(litters_df, gd0_weight, group)
+
+select(litters_df, group, gd0_weight:gd_of_birth)
+
+select(litters_df, group, starts_with("pups"))
+
+select (litters_df, -litter_number)
+
+select(litters_df, -starts_with("gd"))
+
+select(litters_df, group, litter_id = litter_number)
+
+select(litters_df, litter_id = litter_number, everything())
+
+select(litters_df, gd0_weight, everything())
+
+```
+
+`select` vs `pull`
+
+```{r}
+select(litters_df, group)
+
+# this pulls it out of a dataframe and turns it into a vector
+pull(litters_df, group)
+```
+
 

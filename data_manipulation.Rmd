@@ -113,3 +113,30 @@ filter(pups_df, sex == 1)
 filter(pups_df, pd_walk < 11, sex == 2)
 ```
 
+what about missing rows?
+
+```{r}
+# you can drop everything missing or just by column
+drop_na(litters_df)
+drop_na(litters_df, gd0_weight)
+```
+
+
+
+## `mutate`
+
+this is used to add or change variables
+
+```{r}
+view(mutate(litters_df, wt_gain = gd18_weight - gd0_weight))
+
+mutate(litters_df, group = str_to_lower(group))
+
+# you can do multiple mutates in the same fxn
+mutate(
+  litters_df,
+   wt_gain = gd18_weight - gd0_weight,
+   group = str_to_lower(group)
+  )
+```
+

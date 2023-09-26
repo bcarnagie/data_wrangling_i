@@ -76,3 +76,40 @@ pull(litters_df, group)
 select(pups_df, litter_number:pd_ears)
 ```
 
+
+
+## `filter`
+
+get rid of rows using filter 
+
+```{r}
+# one equal sign says to put this variable into another variable and 2 equal signs basically asks to check whether these things are true
+
+filter(litters_df, group == "Con7")
+
+filter(litters_df, group == "Mod8")
+
+filter(litters_df, group !="Con7")
+
+filter(litters_df, gd0_weight > 20)
+
+filter(litters_df, gd0_weight <= 20)
+
+# # containing only those rows where the "group" column matches either "Con7" or "Con8"
+filter(litters_df, group == "Con7"| group == "Con8")
+
+# another way to get only those rows where the "group" column matches either "Con7" or "Con8"
+filter(litters_df, group %in% c("Con7", "Con8")
+       
+
+filter(litters_df, !(group ="Con7")
+       
+# 2 conditions must be met for it to be in the filter
+filter(litters_df, group %in% c("Con7", "Con8"), gd0_weight > 0)
+
+# Learning Assessment 
+filter(pups_df, sex == 1)
+
+filter(pups_df, pd_walk < 11, sex == 2)
+```
+

@@ -53,13 +53,26 @@ select(litters_df, gd0_weight, everything())
 
 ```
 
+These basically do the same thing
+```{r}
+rename(litters_df, litter_id = litter_number)
+
+relocate(litters_df, litter_number)
+```
+
+
 `select` vs `pull`
 
 ```{r}
 select(litters_df, group)
 
-# this pulls it out of a dataframe and turns it into a vector
+# this pulls it out of a dataframe and turns it into a vector; may have its pros or cons depending on the situation
 pull(litters_df, group)
 ```
 
+## Learning Assessment
+
+```{r}
+select(pups_df, litter_number:pd_ears)
+```
 
